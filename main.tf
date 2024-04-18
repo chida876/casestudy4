@@ -31,13 +31,12 @@ resource "aws_subnet" "subnet3" {
 
 # Create S3 Bucket
 resource "aws_s3_bucket" "shared_storage_871996" {
-  bucket = "shared-storage-bucket"
+  bucket = "shared-storage-bucket-${timestamp()}"
 }
 
 resource "aws_s3_bucket_acl" "shared_storage_acl" {
   bucket = aws_s3_bucket.shared_storage.bucket
-
-  acl = "private"
+  acl    = "private"
 }
 
 # EC2 Instances
