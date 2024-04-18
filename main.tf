@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "ap-south-1" # 
+  region = "ap-south-1"
 }
 
 # Create VPC
@@ -12,34 +12,39 @@ resource "aws_vpc" "main" {
 
 # Create Subnets in three different availability zones
 resource "aws_subnet" "subnet1" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.1.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-south-1a"
 }
 
 resource "aws_subnet" "subnet2" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.2.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.2.0/24"
   availability_zone = "ap-south-1b"
 }
 
 resource "aws_subnet" "subnet3" {
-  vpc_id     = aws_vpc.main.id
-  cidr_block = "10.0.3.0/24"
+  vpc_id            = aws_vpc.main.id
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "ap-south-1c"
 }
 
 # Create S3 Bucket
 resource "aws_s3_bucket" "shared_storage" {
   bucket = "shared-storage-bucket"
-  acl    = "private"
+}
+
+resource "aws_s3_bucket_acl" "shared_storage_acl" {
+  bucket = aws_s3_bucket.shared_storage.bucket
+
+  acl = "private"
 }
 
 # EC2 Instances
 resource "aws_instance" "ec2_instance" {
   count = 3
 
-  ami           = "ami-09c8d5d747253fb7a" 
+  ami           = "ami-09c8d5d747253fb7a"
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.subnet1.*.id, count.index % 3)
   key_name      = "springboot-1"
