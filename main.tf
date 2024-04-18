@@ -30,7 +30,7 @@ resource "aws_subnet" "subnet3" {
 }
 
 # Create S3 Bucket
-resource "aws_s3_bucket" "shared_storage" {
+resource "aws_s3_bucket" "shared_storage_871996" {
   bucket = "shared-storage-bucket"
 }
 
@@ -44,7 +44,7 @@ resource "aws_s3_bucket_acl" "shared_storage_acl" {
 resource "aws_instance" "ec2_instance" {
   count = 3
 
-  ami           = "ami-09c8d5d747253fb7a"
+  ami           = "ami-007020fd9c84e18c7"
   instance_type = "t2.micro"
   subnet_id     = element(aws_subnet.subnet1.*.id, count.index % 3)
   key_name      = "springboot-1"
