@@ -30,7 +30,7 @@ resource "aws_subnet" "subnet3" {
 }
 
 # Create S3 Bucket
-resource "aws_s3_bucket" "shared_storage_871996" {
+resource "aws_s3_bucket" "shared_storage" {
   bucket = "shared-storage-bucket-${timestamp()}"
 }
 
