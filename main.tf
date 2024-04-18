@@ -30,12 +30,12 @@ resource "aws_subnet" "subnet3" {
 }
 
 # Create S3 Bucket
-resource "aws_s3_bucket" "shared-storag-871996" {
-  bucket = "shared-storage-bucket-${timestamp()}"
+resource "aws_s3_bucket" "shared-storage-876" {
+  bucket = "shared-storage-bucket-876-${timestamp()}"
 }
 
 resource "aws_s3_bucket_acl" "shared_storage_acl" {
-  bucket = aws_s3_bucket.shared_storage.bucket
+  bucket = aws_s3_bucket.shared-storage-876.bucket
   acl    = "private"
 }
 
@@ -65,7 +65,7 @@ resource "aws_instance" "ec2_instance" {
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = aws_s3_bucket.shared_storage.bucket
+  bucket = aws_s3_bucket.shared-storage-876.bucket
 
   policy = jsonencode({
     Version = "2012-10-17",
