@@ -56,7 +56,7 @@ resource "aws_instance" "ec2_instance" {
               systemctl enable docker
               echo 'docker run -v /mnt/s3:/data -d -p 80:80 nginx' >> /etc/rc.local
               mkdir /mnt/s3
-              mount -t fuse.s3fs <your-s3-bucket-name> /mnt/s3 -o passwd_file=/etc/passwd-s3fs -o url=https://s3.amazonaws.com -o allow_other
+              mount -t fuse.s3fs ${aws_s3_bucket.shared_storage.bucket} /mnt/s3 -o passwd_file=/etc/passwd-s3fs -o url=https://s3.amazonaws.com -o allow_other
               EOF
 
   tags = {
