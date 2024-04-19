@@ -1,57 +1,52 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        AWS_DEFAULT_REGION    = 'us-west-1' // Update with your desired region
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the source code from the repository
-                checkout scm
+                // Checkout the code from the GitHub repository
+               checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/chida876/casestudy4.git']])
             }
         }
 
         stage('Terraform Init') {
             steps {
-                // Initialize Terraform
-                sh 'terraform init'
+                sh '''
+                    terraform init
+                '''
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                // Generate and review Terraform plan
-                sh 'terraform plan'
+                sh '''
+                    terraform plan
+                '''
             }
         }
 
         stage('Terraform Apply') {
             steps {
-                // Apply Terraform changes
-                sh 'terraform apply -auto-approve'
+                input('Proceed with Terraform Apply?') {
+                    sh '''
+                        terraform apply -auto-approve
+                    '''
+                }
             }
         }
 
-        stage('Verify Configuration') {
+        stage('Terraform Destroy') {
             steps {
-                // Verify the AWS resources (Optional: Add verification steps here)
-                sh 'aws sts get-caller-identity'
+                sh '''
+                    terraform destroy -auto-approve
+                '''
             }
         }
-
-        
     }
 
     post {
-        success {
-            echo 'AWS infrastructure deployed successfully!'
-        }
-        failure {
-            echo 'Deployment failed. Please check the logs for more details.'
+        always {
+            cleanWs()
         }
     }
 }
