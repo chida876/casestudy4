@@ -1,0 +1,11 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PassRoleForS3AccessRole",
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::851725625602:role/s3_access_role"
+        }
+    ]
+}
