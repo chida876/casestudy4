@@ -28,7 +28,7 @@ resource "aws_subnet" "subnet3" {
 
 # Create an S3 bucket
 resource "aws_s3_bucket" "my_shared_bucket" {
-  bucket = "my-shared-bucket"
+  bucket = "my-shared-bucket-876"
 }
 
 # EC2 instances
