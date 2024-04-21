@@ -47,8 +47,8 @@ resource "aws_instance" "ec2_instance" {
               sudo apt-get update
               sudo apt-get install -y docker.io
               sudo apt-get install -y s3fs
-              echo 'AKIA4MTWNVEBOUIVGVZY
-:73IChEeRvoyeqxkN/3pYQe8kYicYjzavLghdQaBt' > /home/ubuntu/.passwd-s3fs
+              echo 'put my aws access key
+:put aws secter key' > /home/ubuntu/.passwd-s3fs
               chmod 600 /home/ubuntu/.passwd-s3fs
               sudo mkdir /mnt/my_shared_bucket
               sudo s3fs ${aws_s3_bucket.my_shared_bucket.bucket} /mnt/my_shared_bucket -o passwd_file=/home/ubuntu/.passwd-s3fs -o url=https://s3.amazonaws.com -o use_path_request_style
